@@ -30,12 +30,7 @@ if git diff --quiet; then
   exit 0
 fi
 
-read -p "Mensagem do commit: " MSG
-
-if [ -z "$MSG" ]; then
-  MSG="Atualiza arquivos do Codex"
-fi
-
 git add .
+MSG="Atualiza Codex em $(date '+%Y-%m-%d %H:%M:%S')"
 git commit -m "$MSG"
 git push
