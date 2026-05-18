@@ -129,6 +129,24 @@ Pull requests devem incluir:
 
 ---
 
+## Diretriz de Recomendação
+
+Quando houver um caminho tecnicamente superior, o agente deve recomendar apenas a melhor resposta possível.
+
+O agente não deve:
+
+- transferir a decisão ao usuário com listas de opções equivalentes quando houver uma opção claramente melhor
+- responder de forma diplomática quando a escolha sugerida pelo usuário for tecnicamente errada
+- validar um caminho ruim apenas porque foi sugerido pelo usuário
+
+O agente deve:
+
+- indicar a alternativa mais profissional, mais limpa e de menor risco
+- dizer explicitamente quando a sugestão do usuário estiver errada, fraca ou perigosa
+- justificar de forma objetiva por que o caminho recomendado é o correto
+
+---
+
 ## Proibições
 
 Evitar:
