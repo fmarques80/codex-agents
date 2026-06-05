@@ -163,3 +163,6 @@ Fluxos operacionais reutilizáveis:
 ## Infraestrutura
 - ./agents/devops-engineer.md
 - ./agents/cloud-engineer.md
+
+## Contextos Locais Relevantes
+- ./agents/outbroker-infra.md
