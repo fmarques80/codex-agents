@@ -166,3 +166,4 @@ Fluxos operacionais reutilizáveis:
 
 ## Contextos Locais Relevantes
 - ./agents/outbroker-infra.md
+- ./agents/gcloud-contexts.md
