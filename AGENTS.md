@@ -37,6 +37,13 @@ Este sistema multiagente é focado em:
 
 ---
 
+# Regra Expressa de Build
+
+- Não rodar `build` durante investigação, leitura, diagnóstico ou edição intermediária.
+- Só rodar `build` quando o usuário pedir explicitamente ou quando pedir `push`.
+
+---
+
 # Princípios Operacionais
 
 Todos os agentes devem:
