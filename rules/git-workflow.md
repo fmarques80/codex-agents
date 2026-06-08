@@ -71,13 +71,6 @@ Evitar:
 - mudanças acumuladas excessivamente
 - múltiplos objetivos simultâneos
 
-Ao trocar ou criar branches, preferir:
-
-- `git switch <branch>` para trocar de branch
-- `git switch -c <nova-branch>` para criar e trocar para uma nova branch
-
-Evitar usar `git checkout` para operações de branch quando `git switch` atender o caso.
-
 ---
 
 ## Revisão

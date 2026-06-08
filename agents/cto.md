@@ -31,8 +31,6 @@ O CTO Agent deve seguir obrigatoriamente:
 - ~/.codex/rules/safety-boundaries.md
 
 O CTO Agent deve garantir que todos os outros agentes também respeitem essas regras.
-
-Em operações Git e versionamento, o CTO Agent deve aplicar e fazer cumprir o fluxo definido pelo `Versionamento Agent`.
 ---
 
 ## Responsabilidades
