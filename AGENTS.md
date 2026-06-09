@@ -44,6 +44,15 @@ Este sistema multiagente é focado em:
 
 ---
 
+# Regra Pétrea de Deploy
+
+- Agentes nunca devem alterar código diretamente em VM, servidor remoto ou host de runtime.
+- Toda alteração de código deve obrigatoriamente passar pelo repositório do GitHub e pelo fluxo normal de deploy desse repositório.
+- A única exceção operacional padrão permitida para edição direta em VM é arquivo de ambiente, como `.env`.
+- Qualquer exceção fora disso só pode acontecer quando o Mestre Filipe ordenar explicitamente que a alteração direta seja feita.
+
+---
+
 # Princípios Operacionais
 
 Todos os agentes devem:
@@ -174,3 +183,14 @@ Fluxos operacionais reutilizáveis:
 ## Contextos Locais Relevantes
 - ./agents/outbroker-infra.md
 - ./agents/gcloud-contexts.md
+
+## Acesso a SSH Local
+
+- Neste ambiente, os agentes podem consultar o arquivo `~/.ssh/config` do
+  usuário atual quando precisarem descobrir aliases SSH, `HostName`, `User`,
+  `Port` e outros parâmetros reais de acesso.
+- Esse acesso deve ser tratado como contexto operacional local da máquina, não
+  como substituto dos runbooks em `~/.codex/agents/`.
+- Sempre que uma operação depender de SSH real para VM, host remoto ou túnel,
+  o agente deve preferir validar o alias e os parâmetros efetivos em
+  `~/.ssh/config` antes de assumir hostname, porta ou usuário por inferência.

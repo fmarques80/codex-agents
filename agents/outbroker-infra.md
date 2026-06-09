@@ -39,6 +39,47 @@ Observação:
 - Restart automático: habilitado
 - Host maintenance: `MIGRATE`
 
+## Instância dedicada do media-worker
+
+Regra arquitetural obrigatória consolidada em 2026-06-08:
+
+- o `media-worker` de upload deve rodar em uma única VM dedicada central
+- essa VM atende múltiplos apps e ambientes
+- `outbroker devel`, `outbroker prod`, `local` e futuros consumidores como
+  `outsign` devem compartilhar esse mesmo worker
+- a separação correta é por `app + environment` no `MediaJob` e no token de
+  upload
+- não deve existir uma VM de worker separada por ambiente
+- o endpoint público deve ser único, em um subdomínio novo com TLS, como
+  `uploads.outbroker.app`
+- `media.outbroker.app` não deve ser reutilizado para ingestão do worker
+
+- Nome: `outbroker-media-worker-prod`
+- Status: `RUNNING`
+- Região/zona: `southamerica-east1-b`
+- Tipo de máquina: `e2-standard-2`
+- Sistema: `debian-13-trixie`
+- IP interno: `10.158.0.3`
+- IP externo atual: `34.39.195.172`
+- Provisioning model: `STANDARD`
+- Restart automático: habilitado
+- Host maintenance: `MIGRATE`
+
+Leitura operacional:
+
+- esta VM foi criada em `2026-06-08` para hospedar exclusivamente o
+  `outbroker-media-worker`
+- o runtime foi implantado em `/opt/outbroker-media-worker`
+- o processo foi persistido via `systemd` com a unit
+  `outbroker-media-worker.service`
+- o arquivo de ambiente ficou em `/etc/outbroker-media-worker/.env`
+- o health público inicial validado foi `http://34.39.195.172:4304/health`
+- a borda final ficou publicada em:
+  - `https://uploads.outbroker.app/health`
+- o runtime centralizado atual já sobe com targets:
+  - `outbroker:devel`
+  - `outbroker:prod`
+
 ## Sistema operacional
 
 - Imagem/licença do disco de boot: `debian-13-trixie`
@@ -62,6 +103,8 @@ Observação:
 - `default-allow-ssh`: abre `tcp:22` para `0.0.0.0/0`
 - `allow-ssh`: abre `tcp:32800` para `0.0.0.0/0`
 - `default-allow-internal`: tráfego interno amplo para a faixa privada
+- `allow-media-worker-4304`: abre `tcp:4304` para `0.0.0.0/0` nas instâncias
+  com tag `media-worker`
 
 ## Discos
 
@@ -143,6 +186,11 @@ Esse ponto vem do checkout da aplicação e da operação recente:
   - `outbroker-feed-bot`
 - os DNS públicos dessas aplicações convergem para o mesmo IP público
 
+Atualização de `2026-06-08`:
+
+- o `outbroker-media-worker` não ficou na VM compartilhada
+- ele ganhou VM dedicada própria dentro do mesmo projeto de infraestrutura
+
 ### Organização operacional por usuário na VM
 
 Informação operacional fornecida pelo Filipe e tratada como referência local
@@ -193,16 +241,19 @@ Regra operacional derivada:
 
 - `project-c70e3d96-205a-42c4-b6c`
   - nome: `MAQUINA VIRTUAL`
-  - função real hoje: hospedar a VM única onde todas as quatro aplicações rodam
+  - função real hoje: hospedar a VM compartilhada principal e também a VM
+    dedicada do `outbroker-media-worker`
   - evidência:
     - `compute.googleapis.com` habilitado
     - instância `outbroker-prod` em `RUNNING`
+    - instância `outbroker-media-worker-prod` em `RUNNING`
     - IP público em uso
   - dependência:
     - `outbroker`
     - `outsign`
     - `outlogin`
     - `outbroker-feed-bot`
+    - `outbroker-media-worker`
 
 ### Projetos auxiliares ou candidatos a legado
 
