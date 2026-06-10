@@ -19,7 +19,7 @@ Exceções permitidas:
 - nomes internos de APIs
 - estruturas técnicas padronizadas em inglês
 
-Textos voltados ao usuário final devem sempre estar em Português do Brasil.
+Textos voltados ao usuário final devem sempre estar em Português do Brasil e com acentuação.
 
 ---
 
