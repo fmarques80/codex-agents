@@ -1,5 +1,5 @@
 model = "gpt-5.4"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "low"
 personality = "friendly"
 approval_policy = "never"
 web_search = "live"
